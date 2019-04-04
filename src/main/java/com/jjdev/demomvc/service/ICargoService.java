@@ -19,4 +19,6 @@ public interface ICargoService {
 
     List<JCargo> buscarTodos();
 
+    boolean cargoTemFuncionarios(Long id);
+
 }

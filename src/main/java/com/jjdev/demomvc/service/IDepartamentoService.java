@@ -19,4 +19,6 @@ public interface IDepartamentoService {
 
     List<JDepartamento> buscarTodos();
 
+    boolean departamentoTemCargos(Long id);
+
 }
