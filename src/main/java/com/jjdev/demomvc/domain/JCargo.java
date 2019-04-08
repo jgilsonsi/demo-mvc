@@ -2,6 +2,9 @@ package com.jjdev.demomvc.domain;
 
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -11,9 +14,12 @@ import javax.persistence.*;
 @Table(name = "cargos")
 public class JCargo extends JAbstractEntity<Long> {
 
+    @NotBlank(message = "O nome do cargo é obrigatório.")
+    @Size(max = 60, message = "O nome do cargo deve ter no máximo {max} caracteres.")
     @Column(name = "nome", nullable = false, unique = true, length = 60)
     private String nome;
 
+    @NotNull(message = "Selecione o departamento relativo ao cargo.")
     @ManyToOne
     @JoinColumn(name = "id_departamento_fk")
     private JDepartamento departamento;

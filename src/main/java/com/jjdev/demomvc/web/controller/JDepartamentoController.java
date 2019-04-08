@@ -2,9 +2,11 @@ package com.jjdev.demomvc.web.controller;
 
 import com.jjdev.demomvc.domain.JDepartamento;
 import com.jjdev.demomvc.service.IDepartamentoService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +37,12 @@ public class JDepartamentoController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute("departamento") JDepartamento departamento, RedirectAttributes attr) {
+    public String salvar(@Valid @ModelAttribute("departamento") JDepartamento departamento, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "/departamento/cadastro";
+        }
+
         departamentoService.salvar(departamento);
         attr.addFlashAttribute("success", "Departamento inserido com sucesso.");
         return "redirect:/departamentos/cadastrar";
@@ -48,7 +55,12 @@ public class JDepartamentoController {
     }
 
     @PostMapping("/editar")
-    public String editar(@ModelAttribute("departamento") JDepartamento departamento, RedirectAttributes attr) {
+    public String editar(@Valid @ModelAttribute("departamento") JDepartamento departamento, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "/departamento/cadastro";
+        }
+
         departamentoService.editar(departamento);
         attr.addFlashAttribute("success", "Departamento editado com sucesso.");
         return "redirect:/departamentos/cadastrar";

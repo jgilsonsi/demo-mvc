@@ -5,9 +5,11 @@ import com.jjdev.demomvc.domain.JDepartamento;
 import com.jjdev.demomvc.service.ICargoService;
 import com.jjdev.demomvc.service.IDepartamentoService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,12 @@ public class JCargoController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute("cargo") JCargo cargo, RedirectAttributes attr) {
+    public String salvar(@Valid @ModelAttribute("cargo") JCargo cargo, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "/cargo/cadastro";
+        }
+
         cargoService.salvar(cargo);
         attr.addFlashAttribute("success", "Cargo inserido com sucesso.");
         return "redirect:/cargos/cadastrar";
@@ -54,7 +61,12 @@ public class JCargoController {
     }
 
     @PostMapping("/editar")
-    public String editar(@ModelAttribute("cargo") JCargo cargo, RedirectAttributes attr) {
+    public String editar(@Valid @ModelAttribute("cargo") JCargo cargo, BindingResult result, RedirectAttributes attr) {
+
+        if (result.hasErrors()) {
+            return "/cargo/cadastro";
+        }
+
         cargoService.editar(cargo);
         attr.addFlashAttribute("success", "Cargo editado com sucesso.");
         return "redirect:/cargos/cadastrar";

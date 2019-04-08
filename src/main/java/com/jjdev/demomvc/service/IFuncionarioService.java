@@ -1,6 +1,7 @@
 package com.jjdev.demomvc.service;
 
 import com.jjdev.demomvc.domain.JFuncionario;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -18,5 +19,11 @@ public interface IFuncionarioService {
     JFuncionario buscarPorId(Long id);
 
     List<JFuncionario> buscarTodos();
+
+    List<JFuncionario> buscarPorNome(String nome);
+
+    List<JFuncionario> buscarPorCargo(Long id);
+
+    List<JFuncionario> buscarPorDatas(LocalDate entrada, LocalDate saida);
 
 }

@@ -1,6 +1,10 @@
 package com.jjdev.demomvc.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -10,25 +14,37 @@ import javax.persistence.*;
 @Table(name = "enderecos")
 public class JEndereco extends JAbstractEntity<Long> {
 
+    @NotBlank(message = "Informe um logradouro.")
+    @Size(min = 3, max = 255, message = "O logradouro deve ter entre {min} e {max} caracteres.")
     @Column(nullable = false)
     private String logradouro;
 
+    @NotBlank(message = "Informe o bairro.")
+    @Size(min = 3, max = 255, message = "O bairro deve ter entre {min} e {max} caracteres.")
     @Column(nullable = false)
     private String bairro;
 
+    @NotBlank(message = "Informe a cidade.")
+    @Size(min = 3, max = 255, message = "A cidade deve ter entre {min} e {max} caracteres.")
     @Column(nullable = false)
     private String cidade;
 
+    @NotNull(message = "UF deve ser selecionada.")
     @Column(nullable = false, length = 2)
     @Enumerated(EnumType.STRING)
     private EUF uf;
 
+    @NotBlank(message = "Informe o cep.")
+    @Size(min = 9, max = 9, message = "O CEP deve ter {min} caracteres.")
     @Column(nullable = false, length = 9)
     private String cep;
 
+    @NotNull(message = "Número deve ser informado.")
+    @Digits(integer = 5, fraction = 0, message = "Limite de caracteres atingido.")
     @Column(nullable = false, length = 5)
     private Integer numero;
 
+    @Size(max = 255, message = "Complemento deve ter no máximo {max} caracteres.")
     private String complemento;
 
     public String getLogradouro() {
